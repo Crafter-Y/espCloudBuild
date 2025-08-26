@@ -19,7 +19,7 @@ This project includes:
 
 ## Run in codespace
 
-Everythign should be set up to run:
+Everything should be set up to run:
 
 ```bash
 arduino-cli compile --fqbn esp32:esp32:d1_mini32 espCloudBuild.ino --libraries ./lib --output-dir ./build
