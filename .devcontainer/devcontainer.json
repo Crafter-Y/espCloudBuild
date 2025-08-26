@@ -3,10 +3,6 @@
 	"build": {
 		"dockerfile": "Dockerfile"
 	},
-	"mounts": [
-		"source=arduino15,target=/home/vscode/.arduino15,type=volume",
-		"source=arduinoLibs,target=/home/vscode/Arduino,type=volume"
-	],
 	"postCreateCommand": "git submodule update --init --recursive",
 	"remoteUser": "vscode"
 }
