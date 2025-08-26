@@ -1,3 +1,8 @@
+
+## windows
 arduino-cli compile --fqbn esp32:esp32:d1_mini32 espCloudBuild.ino --libraries .\libraries --output-dir .\build
 
 Measure-Command { arduino-cli compile --fqbn esp32:esp32:d1_mini32 espCloudBuild.ino --libraries .\libraries --output-dir .\build }
+
+## linux
+arduino-cli compile --fqbn esp32:esp32:d1_mini32 espCloudBuild.ino --libraries ./lib --output-dir ./build
