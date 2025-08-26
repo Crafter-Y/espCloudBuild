@@ -10,7 +10,7 @@ jobs:
     runs-on: ubuntu-latest
 
     env:
-      ARDUINO_CLI_VERSION: "0.38.0"   # aktuelle Version prüfen
+      ARDUINO_CLI_VERSION: "0.38.0" # aktuelle Version prüfen
       ARDUINO_DATA_DIR: ${{ github.workspace }}/.arduino15
       ARDUINO_LIBS_DIR: ${{ github.workspace }}/Arduino/libraries
 
@@ -18,7 +18,7 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v3
         with:
-          submodules: recursive   # falls du Submodules hast
+          submodules: recursive # falls du Submodules hast
 
       - name: Set up cache for Arduino CLI Cores
         uses: actions/cache@v3
@@ -41,12 +41,6 @@ jobs:
           curl -fsSL https://raw.githubusercontent.com/arduino/arduino-cli/master/install.sh | BINDIR=/usr/local/bin sh
           arduino-cli version
 
-      - name: Initialize Arduino CLI config
-        run: |
-          arduino-cli config init
-          mkdir -p "${ARDUINO_LIBS_DIR}"
-          mkdir -p "${ARDUINO_DATA_DIR}"
-
       - name: Install ESP32 Core
         run: |
           arduino-cli core update-index
@@ -59,7 +53,6 @@ jobs:
 
       - name: Compile Sketch
         run: |
-          mkdir -p build
           time arduino-cli compile --fqbn esp32:esp32:d1_mini32 espCloudBuild.ino --libraries ./lib --output-dir ./build
 
       - name: Upload BIN artifacts
