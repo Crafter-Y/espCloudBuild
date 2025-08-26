@@ -1,0 +1,69 @@
+name: Arduino Build
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    env:
+      ARDUINO_CLI_VERSION: "0.38.0"   # aktuelle Version prüfen
+      ARDUINO_DATA_DIR: ${{ github.workspace }}/.arduino15
+      ARDUINO_LIBS_DIR: ${{ github.workspace }}/Arduino/libraries
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+        with:
+          submodules: recursive   # falls du Submodules hast
+
+      - name: Set up cache for Arduino CLI Cores
+        uses: actions/cache@v3
+        with:
+          path: ${{ env.ARDUINO_DATA_DIR }}
+          key: arduino-cores-${{ hashFiles('**/platform.txt') }}
+          restore-keys: |
+            arduino-cores-
+
+      - name: Set up cache for Arduino Libraries
+        uses: actions/cache@v3
+        with:
+          path: ${{ env.ARDUINO_LIBS_DIR }}
+          key: arduino-libs-${{ hashFiles('**/*.h','**/*.cpp') }}
+          restore-keys: |
+            arduino-libs-
+
+      - name: Install Arduino CLI
+        run: |
+          curl -fsSL https://raw.githubusercontent.com/arduino/arduino-cli/master/install.sh | BINDIR=/usr/local/bin sh
+          arduino-cli version
+
+      - name: Initialize Arduino CLI config
+        run: |
+          arduino-cli config init
+          mkdir -p "${ARDUINO_LIBS_DIR}"
+          mkdir -p "${ARDUINO_DATA_DIR}"
+
+      - name: Install ESP32 Core
+        run: |
+          arduino-cli core update-index
+          time arduino-cli core install esp32:esp32
+
+      - name: Install Arduino Libraries
+        run: |
+          arduino-cli lib install FastLED
+          arduino-cli lib install ArduinoJson
+
+      - name: Compile Sketch
+        run: |
+          mkdir -p build
+          time arduino-cli compile --fqbn esp32:esp32:d1_mini32 IsabelleLEDRegal.ino --libraries ./libraries --output-dir build
+
+      - name: Upload BIN artifacts
+        uses: actions/upload-artifact@v3
+        with:
+          name: Arduino BINs
+          path: build/*.bin
