@@ -20,6 +20,3 @@ RUN arduino-cli core install esp32:esp32
 # Libraries installieren
 RUN arduino-cli lib install FastLED
 RUN arduino-cli lib install ArduinoJson
-
-RUN git submodule init
-RUN git submodule update
