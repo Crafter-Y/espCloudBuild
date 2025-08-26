@@ -8,6 +8,11 @@ RUN apt-get update && apt-get install -y \
 # Arduino CLI installieren
 RUN curl -fsSL https://raw.githubusercontent.com/arduino/arduino-cli/master/install.sh | BINDIR=/usr/local/bin sh
 
+# User einrichten (für Codespaces)
+RUN useradd -ms /bin/bash vscode
+USER vscode
+WORKDIR /workspace
+
 # ESP32 Core installieren
 RUN arduino-cli core update-index 
 RUN arduino-cli core install esp32:esp32
@@ -16,7 +21,5 @@ RUN arduino-cli core install esp32:esp32
 RUN arduino-cli lib install FastLED
 RUN arduino-cli lib install ArduinoJson
 
-# User einrichten (für Codespaces)
-RUN useradd -ms /bin/bash vscode
-USER vscode
-WORKDIR /workspace
+RUN git submodule init
+RUN git submodule update
