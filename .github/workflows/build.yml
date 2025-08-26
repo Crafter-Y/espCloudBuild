@@ -60,7 +60,7 @@ jobs:
       - name: Compile Sketch
         run: |
           mkdir -p build
-          time arduino-cli compile --fqbn esp32:esp32:d1_mini32 IsabelleLEDRegal.ino --libraries ./libraries --output-dir build
+          time arduino-cli compile --fqbn esp32:esp32:d1_mini32 espCloudBuild.ino --libraries ./lib --output-dir ./build
 
       - name: Upload BIN artifacts
         uses: actions/upload-artifact@v4
