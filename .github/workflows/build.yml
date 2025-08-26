@@ -63,7 +63,7 @@ jobs:
           time arduino-cli compile --fqbn esp32:esp32:d1_mini32 IsabelleLEDRegal.ino --libraries ./libraries --output-dir build
 
       - name: Upload BIN artifacts
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: Arduino BINs
           path: build/*.bin
