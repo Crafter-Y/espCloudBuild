@@ -1,0 +1,7 @@
+{
+	"name": "ESP32 Arduino Dev",
+	"build": {
+		"dockerfile": "Dockerfile"
+	},
+	"remoteUser": "vscode"
+}
