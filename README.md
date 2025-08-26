@@ -48,6 +48,11 @@ run it:
 arduino-cli compile --fqbn esp32:esp32:d1_mini32 espCloudBuild.ino --libraries ./lib --output-dir ./build
 ```
 
+## Building on GH Actions
+
+This project gets automatically build by the GH Action infrastructure on every push to main.
+The Artifacts can be downloaded from the Actions tab
+
 ## License
 
 CC BY 4.0
